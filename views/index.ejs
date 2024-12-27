@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chess Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .chessboard-container {
+        position: relative;
+        width: 420px; /* Slightly larger than the board to accommodate the glow */
+        height: 420px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chessboard {
+        display: grid;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        grid-template-rows: repeat(8, minmax(0, 1fr));
+        width: 400px;
+        height: 400px;
+        transform: rotate(0deg);
+        z-index: 1;
+      }
+
+      .rgb-light {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
+        animation: fade-in-out 3s infinite alternate;
+        z-index: 0;
+      }
+
+      @keyframes fade-in-out {
+        0% {
+          background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
+        }
+        25% {
+          background: radial-gradient(circle, rgba(255, 174, 0, 0.8), transparent);
+        }
+        50% {
+          background: radial-gradient(circle, rgba(123, 255, 0, 0.8), transparent);
+        }
+        75% {
+          background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
+        }
+        100% {
+          background: radial-gradient(circle, rgba(236, 133, 135, 0.8), transparent);
+        }
+      }
+
+      .piece.white {
+        color: white;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 1));
+      }
+
+      .piece.black {
+        color: black;
+      }
+
+      .flipped {
+        transform: rotate(180deg);
+      }
+
+      .square {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .square.light {
+        background-color: #f0d9b5;
+      }
+
+      .square.dark {
+        background-color: #965433;
+      }
+
+      .piece {
+        font-size: 36px;
+        cursor: pointer;
+      }
+
+      .piece.draggable {
+        cursor: grab;
+      }
+
+      .dragging {
+        opacity: 0.5;
+      }
+
+      /* Rotate pieces for black player */
+      .flipped .piece {
+        transform: rotate(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="w-full h-screen flex items-center justify-center bg-zinc-900">
+      <div class="chessboard-container">
+        <div class="rgb-light"></div>
+        <div class="chessboard w-96 h-96 bg-red-800"></div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+      integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"
+      integrity="sha512-xRllwz2gdZciIB+AkEbeq+gVhX8VB8XsfqeFbUh+SzHlN96dEduwtTuVuc2u9EROlmW9+yhRlxjif66ORpsgVA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/js/chessgame.js"></script>
+  </body>
+</html>
